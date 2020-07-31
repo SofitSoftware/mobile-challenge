@@ -7,11 +7,9 @@ class StartController {
 
     async getToken(request, reply) {
 
-        const mongo = new Mongo();
-
         let email = request.params.email;
 
-        let userToken = await mongo.findOne({
+        let userToken = await Mongo.findOne({
             collection: 'token',
             query: {
                 email: email
@@ -25,7 +23,7 @@ class StartController {
                 token: jwt.sign( { email: email }, 'shhhhh')
             };
 
-            await mongo.insert({
+            await Mongo.insert({
                 collection: 'token',
                 body: userToken
             });

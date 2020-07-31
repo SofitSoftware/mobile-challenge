@@ -7,9 +7,7 @@ class Authentication {
 
     async validate(request, token, h) {
 
-        const mongo = new Mongo();
-
-        const validToken = await mongo.findOne({
+        const validToken = await Mongo.findOne({
             collection: 'token',
             query: {
                 token: token

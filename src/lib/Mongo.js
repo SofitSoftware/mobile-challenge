@@ -5,27 +5,29 @@ const MONGO_DB_NAME = 'mobile-challenge';
 
 const config = require('../config/config.js');
 
-let _db;
+var _db = null;
 
 class Mongo {
 
-    async getDb() {
+    static async getDb() {
 
-        if (!this._db) {
+        if (!_db) {
+
+            console.log('vai abrir conexão');
 
             let client = await MongoClient.connect(config.mongoUrl);
 
-            this._db = client.db(MONGO_DB_NAME);
+            _db = client.db(MONGO_DB_NAME);
 
         }
 
-        return this._db;
+        return _db;
 
     }
 
-    async find(options) {
+    static async find(options) {
 
-        const db = await this.getDb();
+        const db = await Mongo.getDb();
 
         if (options && !options.limit) {
             options.limit = 10000;
@@ -34,16 +36,16 @@ class Mongo {
         return db.collection(options.collection).find(options.query || options).sort(options.sort || {}).skip(options.skip).limit(options.limit).toArray();
     }
 
-    async findOne(options) {
+    static async findOne(options) {
 
-        const db = await this.getDb();
+        const db = await Mongo.getDb();
 
         return db.collection(options.collection).findOne(options.query);
     }
 
-    async findOneById(collection, id) {
+    static async findOneById(collection, id) {
 
-        const db = await this.getDb();
+        const db = await Mongo.getDb();
 
         if(!ObjectId.isValid(id)){
             return null;
@@ -54,18 +56,18 @@ class Mongo {
         });
     }
 
-    async insert(options) {
+    static async insert(options) {
 
-        const db = await this.getDb();
+        const db = await Mongo.getDb();
 
         return db.collection(options.collection).insertOne(options.body);
     }
 
-    async update(collection, id, body) {
+    static async update(collection, id, body) {
 
-        const db = await this.getDb();
+        const db = await Mongo.getDb();
         
-        let record = await this.findOneById(collection, id);
+        let record = await Mongo.findOneById(collection, id);
         
         if(!record) {
             return null;
@@ -86,11 +88,11 @@ class Mongo {
         });
     }
 
-    async delete(collection, id) {
+    static async delete(collection, id) {
 
-        const db = await this.getDb();
+        const db = await Mongo.getDb();
 
-        let record = await this.findOneById(collection, id);
+        let record = await Mongo.findOneById(collection, id);
 
         if (!record) {
             return null;

@@ -7,9 +7,7 @@ class BugsController {
 
     async getOne(request, h) {
 
-        const mongo = new Mongo();
-
-        let record = await mongo.findOneById( request.auth.credentials.email,  request.params.id );
+        let record = await Mongo.findOneById( request.auth.credentials.email,  request.params.id );
         
         if(!record) {
             
@@ -22,12 +20,10 @@ class BugsController {
 
     async getAll(request, h) {
 
-        const mongo = new Mongo();
-
         const page = request.query.page;
         const perPage = request.query.perPage;
 
-        let records = await mongo.find({
+        let records = await Mongo.find({
             collection: request.auth.credentials.email,
             query: {},
             skip: (perPage * page) - perPage,
@@ -40,9 +36,7 @@ class BugsController {
 
     async insertOne(request, h) {
 
-        const mongo = new Mongo();
-
-        let result = await mongo.insert({
+        let result = await Mongo.insert({
             collection: request.auth.credentials.email,
             body: request.payload
         });
@@ -57,9 +51,7 @@ class BugsController {
 
     async editOne(request, h) {
 
-        const mongo = new Mongo();
-
-        let result = await mongo.update(request.auth.credentials.email, request.params.id, request.payload);
+        let result = await Mongo.update(request.auth.credentials.email, request.params.id, request.payload);
 
         if (!result || result && result.n) {
 
@@ -72,9 +64,7 @@ class BugsController {
 
     async deleteOne(request, h) {
 
-        const mongo = new Mongo();
-
-        let result = await mongo.delete(request.auth.credentials.email, request.params.id);
+        let result = await Mongo.delete(request.auth.credentials.email, request.params.id);
 
         if (!result || result && result.n) {
 
