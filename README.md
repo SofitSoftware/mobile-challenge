@@ -8,7 +8,7 @@ O teste consiste em uma aplicação para o controle simples de despesas pessoais
 
 ## Requisitos
 
-O aplicativo deve ser desenvolvido uilizando a tecnologia React Native, preferencialmente com Redux.
+O aplicativo deve ser desenvolvido uilizando a tecnologia React Native, preferencialmente com Context Api.
 
 ## APIs
 
