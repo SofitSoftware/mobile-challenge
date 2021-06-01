@@ -22,6 +22,7 @@ Fique a vontade para construir a interface da forma que achar melhor, este tamb�
 
 ## Conclusão do desafio
 
+Contabilitar a quantidade de horas líquidas utilizadas para desenvolver o projeto.
 Após realizar o desafio, enviar ao Github e nos enviar o link por e-mail.
 
 ## O que vamos avaliar?
